@@ -3,8 +3,33 @@
   padding: 0;
   box-sizing: border-box;
 }
+:root {
+  font-size: 16px;
+  --bg-default: #C4C4C4;
+  --bg-primary: #EF7672;
+  --bg-green: #00B398;
+  --bg-gray-1: #DDE5ED;
+  --bg-gray-2: #4D6F80;
+}
+
 body {
-  background: lightblue;
+  background: #F1F6FA;
   font-family: "Poppins", Arial, Helvetica, sans-serif;
   font-weight: 400;
+}
+
+btn, a {
+  outline: none;
+  text-decoration: none;
+}
+
+.btn {
+  background:var(--bg-default);
+  padding: 4px 16px;
+  border-radius: 4px;
+  color: #fff;
+}
+
+.btn.btn-primary{
+  background: var(--bg-primary);
 }
