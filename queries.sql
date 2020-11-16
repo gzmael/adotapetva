@@ -32,17 +32,44 @@ CREATE TABLE responsaveis (
   id_enderecos INT,
   
   CONSTRAINT fk_responsaveis_enderecos
-  FOREIGN KEY (id_enderecos) REFERENCES enderecos(id_enderecos) ON DELETE SET NULL ON UPDATE CASCADE
+
+  FOREIGN KEY (id_enderecos) REFERENCES enderecos(id_enderecos) 
+  ON DELETE SET NULL 
+  ON UPDATE CASCADE
 );
 
+CREATE TABLE ongs (
+id_ongs INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nome_ong VARCHAR(100) UNIQUE,
+email_ong VARCHAR(45) UNIQUE,
+cnpj_cpf VARCHAR(15) UNIQUE,
+telefone_ong VARCHAR(15),
+logo VARCHAR(45),
+nome_resp VARCHAR(100),
+email_resp VARCHAR(45),
+id_enderecos INT,
+
+CONSTRAINT fk_ongs_enderecos
+FOREIGN KEY (id_enderecos) REFERENCES enderecos(id_enderecos) 
+ ON DELETE SET NULL 
+ ON UPDATE CASCADE
+)
 -- Mostrar as tabelas
 SHOW TABLES;
 
--- Alterar uma tabela
+-- Renomear uma tabela
+
+RENAME TABLE tabela_atual TO nova_tabela
+ALTER TABLE tabela_atual RENAME TO tabela_nova
+
+-- Adicionar nova coluna
+
+ALTER TABLE end 
+ADD COLUMN nova INT NOT NULL
+
+-- Remover uma coluna
+ALTER TABLLE end
+DROP nova
 
 -- Deletar uma tabela
-DROP TABLE enderecos;
-
--- Adicionar Coluna
--- Alterar uma Coluna
--- Remover uma Coluna
+DROP TABLE tabela
