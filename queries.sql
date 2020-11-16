@@ -68,7 +68,7 @@ ALTER TABLE end
 ADD COLUMN nova INT NOT NULL
 
 -- Remover uma coluna
-ALTER TABLLE end
+ALTER TABLE end
 DROP nova
 
 -- Deletar uma tabela
