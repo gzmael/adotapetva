@@ -9,7 +9,10 @@
   --bg-primary: #EF7672;
   --bg-green: #00B398;
   --bg-gray-1: #DDE5ED;
-  --bg-gray-2: #4D6F80;
+  --bg-gray-2: #8FA7B2;
+  --bg-gray-3: #4D6F80;
+  --bg-red-1: #EF7672;
+  --bg-red-2: #DC6460;
 }
 
 body {
@@ -28,8 +31,14 @@ btn, a {
   padding: 4px 16px;
   border-radius: 4px;
   color: #fff;
+
+  transition: background ease 0.3s;
 }
 
 .btn.btn-primary{
   background: var(--bg-primary);
+}
+
+.btn.btn-primary:hover{
+  background: var(--bg-red-2);
 }

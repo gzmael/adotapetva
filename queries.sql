@@ -47,13 +47,56 @@ telefone_ong VARCHAR(15),
 logo VARCHAR(45),
 nome_resp VARCHAR(100),
 email_resp VARCHAR(45),
-id_enderecos INT,
+id_enderecos INT(),
 
 CONSTRAINT fk_ongs_enderecos
 FOREIGN KEY (id_enderecos) REFERENCES enderecos(id_enderecos) 
  ON DELETE SET NULL 
  ON UPDATE CASCADE
-)
+);
+
+CREATE TABLE pets (
+id_pets INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nome_pet VARCHAR(45),
+bio TEXT,
+chamada VARCHAR(150),
+foto VARCHAR(65),
+tipo VARCHAR(10) NOT NULL,
+sexo VARCHAR(1) NOT NULL,
+raca VARCHAR(45) NOT NULL,
+data_nascimento DATE,
+vascinas TINYINT(1),
+castrato TINYINT(1),
+diagnostico TINYINT(1),
+cadastrado_em DATETIME DEFAULT NOW(),
+atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
+id_ongs INT,
+
+CONSTRAINT fk_pets_ongs
+FOREIGN KEY (id_ongs) REFERENCES ongs(id_ongs) 
+ ON DELETE CASCADE 
+ ON UPDATE CASCADE
+);
+
+
+CREATE TABLE adocoes (
+id_adocoes INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+id_responsavel INT,
+id_pets INT,
+data_adocao DATETIME,
+cadastrado_em DATETIME DEFAULT NOW(),
+atualizado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+CONSTRAINT fk_adocoes_pets
+FOREIGN KEY (id_pets) REFERENCES pets(id_pets) 
+ ON DELETE CASCADE 
+ ON UPDATE CASCADE,
+
+CONSTRAINT fk_adocoes_responsaveis
+FOREIGN KEY (id_responsavel) REFERENCES responsaveis(id_responsaveis) 
+ ON DELETE CASCADE 
+ ON UPDATE CASCADE
+);
 -- Mostrar as tabelas
 SHOW TABLES;
 
