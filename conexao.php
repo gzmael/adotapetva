@@ -13,6 +13,8 @@ try {
   $senha = '';
 
   $conexao = new PDO($drive, $usuario, $senha);
+  $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $conexao->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 
 } catch (\Exception $err) {
   echo 'Erro ao Conectar no Banco de Dados. Message:' . $err->getMessage();

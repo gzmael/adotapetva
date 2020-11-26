@@ -21,18 +21,23 @@ body {
   font-weight: 400;
 }
 
-btn, a {
+btn, a, input {
   outline: none;
   text-decoration: none;
+  transition: background ease 0.3s, color ease 0.3s;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
 }
 
 .btn {
   background:var(--bg-default);
-  padding: 4px 16px;
+  padding: 8px 16px;
   border-radius: 4px;
   color: #fff;
-
-  transition: background ease 0.3s;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .btn.btn-primary{
@@ -41,4 +46,69 @@ btn, a {
 
 .btn.btn-primary:hover{
   background: var(--bg-red-2);
+}
+
+#wrapper {
+  width: 100vw;
+  height: 100vh;
+
+  background: url(../img/bg-1.png) top right no-repeat;
+}
+
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.menu_topo {
+  width: 100%;
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.menu_topo nav{
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.menu_topo nav ul{
+  list-style-type:none;
+  margin:0 8px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu_topo nav ul li{
+  padding:0 8px;
+  display: flex;
+  align-items: center;
+}
+
+.menu_topo nav ul li a{
+  color: var(--bg-gray-3);
+}
+.menu_topo nav ul li a:hover{
+  color: var(--bg-gray-2);
+}
+
+.menu_topo .logo img{
+  height: 60px;
+}
+
+.menu_topo .social_medias{
+  margin: 0 8px;
+  display: flex;
+  align-items: center;
+}
+
+.menu_topo .social_medias a{
+  display: flex;
+  align-items: center;
 }
