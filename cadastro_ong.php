@@ -107,7 +107,7 @@ if(isset($_POST['entrar'])){
       <a href="login.php">Já tenho conta</a>
       <a href="cadastro.php" class="text-green">Quero adotar</a>
     </div>
-    <img src="img/ong.png" alt="Homem segurando cachorro">
+    <img src="img/ong.svg" alt="Homem segurando cachorro">
   </div>
   </div>
 </div>

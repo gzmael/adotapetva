@@ -12,65 +12,68 @@ if(isset($_POST['entrar'])){
   $senha = filter_input(INPUT_POST, 'senha');
   $confirma_senha = filter_input(INPUT_POST, 'confirma_senha');
 
-  /* Verificar se existe algum responsável já cadastrado */
+  // Tenta encontrar um responsável com os mesmo dados
+  $sqlConsulta = "SELECT * FROM responsaveis WHERE cpf = ? OR email_responsavel = ? OR tel_responsavel = ?";
 
-  $queryConsulta = "SELECT id_responsaveis FROM responsaveis WHERE email_responsavel = :email OR cpf = :cpf OR tel_responsavel = :telefone";
+  $consultaResponsavel = $conexao->prepare($sqlConsulta);
 
   $dadosConsulta = [
-    ':email' => $email,
-    ':cpf' => $cpf,
-    ':telefone' => $telefone
+    $cpf,
+    $email,
+    $telefone
   ];
 
-  $estaCadastrado = $conexao->prepare($queryConsulta);
-  $estaCadastrado->execute($dadosConsulta);
+  $consultaResponsavel->execute($dadosConsulta);
+  $seExiste = $consultaResponsavel->rowCount() > 0 ? true : false;
 
-  $responsavel = $estaCadastrado->fetchObject();
-
-  if(!empty($responsavel)){
-    $erro = 'Já existe um usuário cadastrado com esses dados.';
-  }elseif(empty($nome)) {
-    $erro = 'O campo de Nome está vazio.';
-  }elseif(empty($email)){
-    $erro = 'O campo de E-mail está inválido.';
+  // 1. Validar os dados
+  if(empty($nome)) {
+    $erro = 'O campo de nome deve ser preenchido.';
+  }elseif($seExiste){
+    $erro = 'Já existe um usuário com esses dados';
   }elseif(empty($cpf)){
-    $erro = 'O campo de CPF está vazio.';
+    $erro = 'O campo do CPF deve ser preenchido.';
   }elseif(empty($telefone)){
-    $erro = 'O campo de Telefone está vazio.';
-  }elseif(empty($senha)){
-    $erro = 'O campo de Senha está vazio.';
-  }elseif($senha !== $confirma_senha){
-    $erro = 'As senhas não são iguais.';
+    $erro = 'O campo de Telefone deve ser preenchido.';
+  }elseif(empty($email)){
+    $erro = 'O campo de E-mail deve ser válido.';
+  }elseif(empty($senha) || ($confirma_senha !== $senha)){
+    $erro = 'Os campos de Senha e Confirmação de senha devem estar corretos.';
   }else {
 
-    /* Criptografando Senha */
-    $opcaoHash = [
-      'cost' => 8
-    ];
-    $hash_senha = password_hash($senha, PASSWORD_BCRYPT, $opcaoHash);
+    try{
 
-    /* Adiciona os dados no BD */
-    try {
-      $sql = "INSERT INTO responsaveis (nome_responsavel, email_responsavel,cpf, tel_responsavel, senha) VALUES (:nome, :email, :cpf, :telefone, :senha)";
+      // 2. Preparar a Query
+      $sql = "INSERT INTO responsaveis (nome_responsavel, cpf, email_responsavel, senha, tel_responsavel) VALUES (:nome, :cpf, :email, :senha, :telefone)";
 
-      $insereResponsavel = $conexao->prepare($sql);
+      $option = [
+        'cost' => 8
+      ];
 
-      $dados = array(
-        ':nome' => $nome,
-        ':email' => $email,
-        ':cpf' => $cpf,
-        ':telefone' => $telefone,
-        ':senha' => $hash_senha
-      );
+      $hash = password_hash($senha, PASSWORD_BCRYPT, $option);
 
-      $insereResponsavel->execute($dados);
+      $data = [
+        'nome' => $nome,
+        'cpf' => $cpf,
+        'email' => $email,
+        'senha' => $hash,
+        'telefone' => $telefone
+      ];
+
+      $insereReponsavel = $conexao->prepare($sql);
+      
+      // 3. Executar a Query com os dados
+      $insereReponsavel->execute($data);
 
       $ok = true;
 
+      // 4. Testar se foi cadastrado com sucesso
     } catch (PDOException $e) {
       $erro = $e->getMessage();
     }
+
   }
+  
 
 }
 ?>
@@ -95,6 +98,12 @@ if(isset($_POST['entrar'])){
         </div>
       <?php } ?>
 
+      <?php if(isset($ok)) { ?>
+        <div class="alert success">
+          <strong>Reponsável cadastrado com sucesso!</strong>
+        </div>
+      <?php } ?>
+
       <form action="" method="post">
         <input type="text" name="nome" placeholder="Nome">
         <input type="text" name="cpf" placeholder="CPF">
@@ -104,10 +113,11 @@ if(isset($_POST['entrar'])){
         <input type="password" name="confirma_senha" placeholder="Confirme a Senha">
         <button type="submit" class="btn btn-primary" name="entrar">Entrar</button>
       </form>
+
       <a href="login.php">Já tenho conta</a>
       <a href="cadastro_ong.php" class="text-green">Faço parte de uma ONG</a>
     </div>
-    <img src="img/singup.png" alt="Homem segurando cachorro">
+    <img src="img/singup.svg" alt="Homem segurando cachorro">
   </div>
   </div>
 </div>
