@@ -4,15 +4,12 @@
 // Base de Dados
 
 try {
-  /* $drive = 'mysql:host=51.79.72.47;dbname=onnyc613_sandbox;charset=utf8';
-  $usuario = 'onnyc613_aluno';
-  $senha = 'Senha4lun0.@'; */
 
-  $drive = 'mysql:host=localhost;dbname=adotapetva;charset=utf8';
-  $usuario = 'root';
-  $senha = '';
+  $param1 = 'mysql:host=localhost;dbname=adotapetva;charset=utf8';
+  $param2 = 'root';
+  $param3 = '';
 
-  $conexao = new PDO($drive, $usuario, $senha);
+  $conexao = new PDO($param1, $param2, $param3);
   $conexao->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $conexao->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 

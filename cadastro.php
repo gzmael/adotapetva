@@ -73,7 +73,6 @@ if(isset($_POST['entrar'])){
     }
 
   }
-  
 
 }
 ?>
